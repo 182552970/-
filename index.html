@@ -1,1 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Tower 3D - 休闲泡泡射击游戏 | morixixuegui.shop</title>
+    <meta name="description" content="畅玩Bubble Tower 3D - 一款富有挑战性的3D泡泡射击游戏，瞄准、发射、消除彩色泡泡!">
+    <link rel="canonical" href="https://morixixuegui.shop">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            line-height: 1.6;
+            background-image: url('https://cdn.pixabay.com/photo/2017/08/27/10/17/background-2685827_1280.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(to right, #4285F4, #34A853);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header h1, header p {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        header p {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+        
+        main {
+            padding: 2rem 1rem;
+        }
+        
+        section {
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: transparent !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            overflow: visible !important;
+            margin-bottom: 2rem;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: none !important;
+        }
+        
+        .game-container {
+            width: 100%;
+            text-align: center;
+            padding: 0 !important;
+            background: transparent !important;
+            display: block !important;
+            position: relative;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            overflow: visible !important;
+            border-radius: 0 !important;
+            margin: 0 !important;
+        }
+        
+        .game-container::before {
+            display: none !important;
+        }
+        
+        .game-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            margin: 0 auto;
+            background: transparent;
+            display: block;
+            overflow: hidden;
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        
+        .game-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 !important;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .game-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 2rem;
+            max-height: 400px;
+        }
+        
+        .game-link {
+            display: inline-block;
+            background-color: #9d50bb;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .game-link:hover {
+            background-color: #5c3b99;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(156,80,187,0.4);
+        }
+        
+        .game-notice {
+            color: #fff;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4285F4;
+            margin-bottom: 1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+        
+        .check-icon {
+            color: #34A853;
+            margin-right: 0.5rem;
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+        }
+        
+        .controls-box {
+            background-color: #2a2a2a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .controls-box h3 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #f0f0f0;
+        }
+        
+        .controls-list {
+            list-style: none;
+        }
+        
+        .controls-list li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .controls-list span {
+            font-weight: 600;
+            color: #4285F4;
+        }
+        
+        footer {
+            background: linear-gradient(to right, #4285F4, #34A853);
+            color: white;
+            padding: 2rem 1rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+            }
+        }
+        
+        .footer-info {
+            margin-bottom: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .footer-info {
+                margin-bottom: 0;
+            }
+        }
+        
+        .footer-title {
+            font-weight: bold;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            color: white;
+            transition: color 0.2s;
+        }
+        
+        .social-icon:hover {
+            color: #cccccc;
+        }
 
+        .reviews {
+            margin-top: 2rem;
+        }
+
+        .review-item {
+            background: rgba(42, 42, 42, 0.8);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .review-author {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #4285F4;
+        }
+
+        .review-text {
+            font-style: italic;
+        }
+
+        .guide-section {
+            background: #2a2a2a;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .guide-title {
+            color: #4285F4;
+            border-bottom: 2px solid #34A853;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hint-item {
+            margin-bottom: 1rem;
+        }
+
+        .hint-item strong {
+            color: #4285F4;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background-color: #4285F4;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 1rem auto;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .play-button:hover {
+            background-color: #34A853;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(66,133,244,0.4);
+        }
+
+        .btn-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .light-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(45deg, rgba(66, 133, 244, 0) 0%, rgba(52, 168, 83, 0.3) 50%, rgba(66, 133, 244, 0) 100%);
+            background-size: 200% 200%;
+            animation: lightMove 8s ease infinite;
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes lightMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 截图轮播样式 */
+        .screenshot-container {
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .screenshot-slider {
+            width: 100%;
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .screenshot {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .screenshot.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .screenshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .screenshot-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        
+        .screenshot-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+        
+        .screenshot-prev, .screenshot-next {
+            background: rgba(66, 133, 244, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: background 0.3s;
+        }
+        
+        .screenshot-prev:hover, .screenshot-next:hover {
+            background: rgba(52, 168, 83, 1);
+        }
+        
+        .screenshot-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(66, 133, 244, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background: rgba(66, 133, 244, 1);
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="light-effect"></div>
+            <h1>Bubble Tower 3D</h1>
+            <p>一款休闲刺激的3D泡泡射击游戏</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 游戏部分 -->
+        <section style="margin-bottom: 0 !important; padding: 0 !important;">
+            <div class="card" style="margin: 0 !important; padding: 0 !important;">
+                <div class="game-container" style="margin: 0 !important; padding: 0 !important;">
+                    <div class="game-content" style="margin: 0 !important; padding: 0 !important;">
+                        <img src="https://play.famobi.com/assets/images/famobi_game_url_thumbnail.jpg" alt="Bubble Tower 3D Logo" class="game-image">
+                        <h2 style="color: #fff; margin-bottom: 1rem;">开始泡泡射击冒险！</h2>
+                        <p class="game-notice">点击下方按钮立即开始游戏：</p>
+                        
+                        <div class="btn-container">
+                            <a href="https://play.famobi.com/wrapper/bubble-tower-3d/A1000-10" class="play-button">
+                                立即开始游戏
+                            </a>
+                        </div>
+                        
+                        <p class="game-notice" style="font-size: 0.9rem; color: #aaa;">
+                            注意：游戏支持PC和移动设备，推荐使用最新版Chrome或Firefox浏览器获得最佳体验。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏截图展示 -->
+        <section>
+            <div class="card">
+                <div class="card-content">
+                    <h2>游戏截图</h2>
+                    <div class="screenshot-container">
+                        <div class="screenshot-slider">
+                            <div class="screenshot active">
+                                <img src="https://img.gamedistribution.com/ef0f13a7bef64870b575b4e9b1ef854f-512x340.jpeg" alt="Bubble Tower 3D截图1" />
+                                <div class="screenshot-caption">3D塔楼游戏画面</div>
+                            </div>
+                            <div class="screenshot">
+                                <img src="https://img.gamedistribution.com/ef0f13a7bef64870b575b4e9b1ef854f-512x384.jpeg" alt="Bubble Tower 3D截图2" />
+                                <div class="screenshot-caption">瞄准和射击玩法</div>
+                            </div>
+                            <div class="screenshot">
+                                <img src="https://img.gamedistribution.com/ef0f13a7bef64870b575b4e9b1ef854f-512x512.jpeg" alt="Bubble Tower 3D截图3" />
+                                <div class="screenshot-caption">多彩泡泡效果</div>
+                            </div>
+                        </div>
+                        <div class="screenshot-controls">
+                            <button class="screenshot-prev" aria-label="上一张截图">◀</button>
+                            <div class="screenshot-dots">
+                                <span class="dot active" data-index="0"></span>
+                                <span class="dot" data-index="1"></span>
+                                <span class="dot" data-index="2"></span>
+                            </div>
+                            <button class="screenshot-next" aria-label="下一张截图">▶</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏介绍 -->
+        <section>
+            <div class="card">
+                <div class="card-content">
+                    <h2>游戏介绍</h2>
+                    <p>《Bubble Tower 3D》是一款由Famobi开发的休闲泡泡射击游戏，带来了经典泡泡射击游戏的全新3D体验。</p>
+                    <p style="margin-top: 1rem;">游戏的核心机制是瞄准并发射彩色泡泡，使其与塔上相同颜色的泡泡碰撞。当三个或更多相同颜色的泡泡连在一起时，它们会消失，从而使塔的高度降低。你的目标是在泡泡到达底线之前清除所有泡泡。</p>
+                    <p style="margin-top: 1rem;">游戏采用现代3D图形和物理引擎，创造出流畅且令人满足的消除体验。随着关卡的进展，游戏会引入新的挑战和特殊泡泡，需要更多的策略和技巧来通关。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏特色 -->
+        <section class="features-grid">
+            <div class="card">
+                <div class="card-content">
+                    <h2>游戏特色</h2>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>3D游戏体验:</strong> 全新3D视角的泡泡射击游戏</span>
+                        </li>
+                        <li class="feature-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>精准瞄准系统:</strong> 直观的瞄准和发射控制</span>
+                        </li>
+                        <li class="feature-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>多样化关卡:</strong> 逐渐增加难度的关卡设计</span>
+                        </li>
+                        <li class="feature-item">
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span><strong>特殊能力泡泡:</strong> 爆炸泡泡、冰冻泡泡等特殊道具</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <h2>游戏操作</h2>
+                    <div class="controls-box">
+                        <h3>控制方式:</h3>
+                        <ul class="controls-list">
+                            <li><span>鼠标/触摸:</span> 瞄准泡泡方向</li>
+                            <li><span>点击/释放:</span> 发射泡泡</li>
+                            <li><span>右上角按钮:</span> 交换预备泡泡</li>
+                            <li><span>特殊按钮:</span> 使用特殊能力（当可用时）</li>
+                        </ul>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <h3>小贴士:</h3>
+                        <ul style="list-style-type: disc; margin-left: 1.5rem;">
+                            <li>瞄准泡泡群的边缘可以创造更多消除机会</li>
+                            <li>合理利用反弹来触及难以直接命中的位置</li>
+                            <li>优先消除底部的泡泡，可能会引发连锁反应</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 游戏攻略 -->
+        <section>
+            <div class="card">
+                <div class="card-content">
+                    <h2>游戏攻略</h2>
+                    <div class="guide-section">
+                        <h3 class="guide-title">新手指南</h3>
+                        <div class="hint-item">
+                            <strong>基础玩法</strong>
+                            <p>游戏开始时，屏幕上方会有一个由彩色泡泡组成的塔。你需要通过发射底部的泡泡，将它们与塔上相同颜色的泡泡连接起来。当三个或更多相同颜色的泡泡连在一起时，它们会消失。</p>
+                        </div>
+                        <div class="hint-item">
+                            <strong>瞄准技巧</strong>
+                            <p>精确的瞄准是成功的关键。利用游戏中的引导线来帮助你判断泡泡的行进路径。有时，利用墙壁反弹可以让你到达直接路径无法到达的位置。</p>
+                        </div>
+                        <div class="hint-item">
+                            <strong>特殊泡泡</strong>
+                            <p>游戏中有各种特殊泡泡，如爆炸泡泡（消除周围的泡泡）、彩虹泡泡（可以匹配任何颜色）等。了解这些特殊泡泡的功能并合理利用它们是通关的关键。</p>
+                        </div>
+                        <div class="hint-item">
+                            <strong>战略思考</strong>
+                            <p>不要只关注当前可见的匹配，而要考虑后续的连锁反应。有时候，消除一个关键位置的泡泡可能会导致整片区域的泡泡掉落，从而大大减少塔的高度。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 玩家评价 -->
+        <section class="reviews">
+            <h2>玩家评价</h2>
+            <div class="review-item">
+                <p class="review-author">BubbleShooterFan</p>
+                <p class="review-text">"这是我玩过的最好的3D泡泡射击游戏之一！图形精美，控制精准，关卡设计很有挑战性。特别喜欢泡泡消除时的视觉效果，非常满足。"</p>
+            </div>
+            <div class="review-item">
+                <p class="review-author">CasualGamer123</p>
+                <p class="review-text">"很棒的休闲游戏，简单易上手但又有足够的深度。3D效果为传统的泡泡射击游戏增添了新鲜感，特殊泡泡的设计也很有创意。"</p>
+            </div>
+            <div class="review-item">
+                <p class="review-author">GameReviewer42</p>
+                <p class="review-text">"作为一个泡泡射击游戏的粉丝，我非常欣赏这款游戏的3D创新。物理引擎表现出色，泡泡的碰撞和消除感觉非常真实。关卡难度安排得也很合理。"</p>
+            </div>
+            <div class="review-item">
+                <p class="review-author">MobileMom</p>
+                <p class="review-text">"这款游戏很适合在碎片时间玩，一个关卡不会太长，但又足够有趣。我和孩子们都很喜欢，简单的规则和精美的画面让它成为我们家庭游戏时间的最爱。"</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h2 class="footer-title">Bubble Tower 3D</h2>
+                    <p>© 2024 Famobi. 此页面由morixixuegui.shop呈现。</p>
+                </div>
+                <div>
+                    <h2 class="footer-title">关注我们</h2>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">
+                            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 截图轮播功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const screenshots = document.querySelectorAll('.screenshot');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.querySelector('.screenshot-prev');
+            const nextBtn = document.querySelector('.screenshot-next');
+            let currentIndex = 0;
+            
+            // 处理游戏链接点击事件
+            const playButton = document.querySelector('.play-button');
+            const gameContainer = document.querySelector('.game-container');
+            const gameContent = document.querySelector('.game-content');
+            
+            // 强制移除所有可能导致灰色背景的元素
+            function removeAllBackgrounds() {
+                document.querySelectorAll('.card, .game-container, .game-content, section, .container').forEach(el => {
+                    el.style.backgroundColor = 'transparent';
+                    el.style.backdropFilter = 'none';
+                    el.style.webkitBackdropFilter = 'none';
+                    el.style.boxShadow = 'none';
+                    el.style.border = 'none';
+                    el.style.borderRadius = '0';
+                    el.style.margin = '0';
+                    el.style.padding = '0';
+                    el.style.overflow = 'visible';
+                });
+            }
+            
+            // 直接加载游戏iframe而不是等待按钮点击
+            function loadGame() {
+                // 创建iframe并添加到游戏容器
+                if (!document.querySelector('.game-iframe')) {
+                    // 隐藏原有内容
+                    const gameImage = document.querySelector('.game-image');
+                    const gameTitle = document.querySelector('.game-content h2');
+                    const gameNotice = document.querySelectorAll('.game-notice');
+                    const btnContainer = document.querySelector('.btn-container');
+                    
+                    if (gameImage) gameImage.style.display = 'none';
+                    if (gameTitle) gameTitle.style.display = 'none';
+                    if (gameNotice.length > 0) {
+                        gameNotice.forEach(notice => notice.style.display = 'none');
+                    }
+                    if (btnContainer) btnContainer.style.display = 'none';
+                    
+                    // 移除所有卡片和容器内容
+                    const cardContent = document.querySelector('.card-content');
+                    if (cardContent) {
+                        cardContent.style.display = 'none';
+                    }
+                    
+                    // 强制移除所有背景
+                    removeAllBackgrounds();
+                    
+                    // 直接将iframe添加到页面
+                    const iframe = document.createElement('iframe');
+                    iframe.src = 'https://play.famobi.com/wrapper/bubble-tower-3d/A1000-10';
+                    iframe.style.border = 'none';
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100vh';
+                    iframe.style.position = 'fixed';
+                    iframe.style.top = '0';
+                    iframe.style.left = '0';
+                    iframe.style.zIndex = '999';
+                    iframe.style.backgroundColor = 'transparent';
+                    iframe.allow = 'autoplay; fullscreen';
+                    iframe.allowFullscreen = true;
+                    
+                    // 清空内容并添加iframe
+                    gameContent.innerHTML = '';
+                    document.body.appendChild(iframe);
+                    
+                    // 隐藏其他所有内容
+                    document.querySelectorAll('header, footer, section:not(:first-child)').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                }
+            }
+            
+            // 在页面加载后直接显示游戏
+            loadGame();
+            
+            function showScreenshot(index) {
+                screenshots.forEach(screenshot => screenshot.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                screenshots[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentIndex = index;
+            }
+            
+            function nextScreenshot() {
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= screenshots.length) {
+                    nextIndex = 0;
+                }
+                showScreenshot(nextIndex);
+            }
+            
+            function prevScreenshot() {
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) {
+                    prevIndex = screenshots.length - 1;
+                }
+                showScreenshot(prevIndex);
+            }
+            
+            // 点击事件绑定
+            nextBtn.addEventListener('click', nextScreenshot);
+            prevBtn.addEventListener('click', prevScreenshot);
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    showScreenshot(index);
+                });
+            });
+            
+            // 自动轮播
+            setInterval(nextScreenshot, 5000);
+        });
+    </script>
+</body>
+</html> 

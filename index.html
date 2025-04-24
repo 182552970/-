@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PMKNPV476D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-PMKNPV476D');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bubble Tower 3D - 休闲泡泡射击游戏 | morixixuegui.shop</title>
@@ -493,15 +502,6 @@
             transform: scale(1.2);
         }
     </style>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PMKNPV476D"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-PMKNPV476D');
-    </script>
 </head>
 <body>
     <header>
@@ -722,126 +722,158 @@
     </footer>
     
     <script>
-        // 截图轮播功能
+        // 确保Google Analytics先执行一段时间
         document.addEventListener('DOMContentLoaded', function() {
-            const screenshots = document.querySelectorAll('.screenshot');
-            const dots = document.querySelectorAll('.dot');
-            const prevBtn = document.querySelector('.screenshot-prev');
-            const nextBtn = document.querySelector('.screenshot-next');
-            let currentIndex = 0;
-            
-            // 处理游戏链接点击事件
-            const playButton = document.querySelector('.play-button');
-            const gameContainer = document.querySelector('.game-container');
-            const gameContent = document.querySelector('.game-content');
-            
-            // 强制移除所有可能导致灰色背景的元素
-            function removeAllBackgrounds() {
-                document.querySelectorAll('.card, .game-container, .game-content, section, .container').forEach(el => {
-                    el.style.backgroundColor = 'transparent';
-                    el.style.backdropFilter = 'none';
-                    el.style.webkitBackdropFilter = 'none';
-                    el.style.boxShadow = 'none';
-                    el.style.border = 'none';
-                    el.style.borderRadius = '0';
-                    el.style.margin = '0';
-                    el.style.padding = '0';
-                    el.style.overflow = 'visible';
-                });
-            }
-            
-            // 直接加载游戏iframe而不是等待按钮点击
-            function loadGame() {
-                // 创建iframe并添加到游戏容器
-                if (!document.querySelector('.game-iframe')) {
-                    // 隐藏原有内容
-                    const gameImage = document.querySelector('.game-image');
-                    const gameTitle = document.querySelector('.game-content h2');
-                    const gameNotice = document.querySelectorAll('.game-notice');
-                    const btnContainer = document.querySelector('.btn-container');
-                    
-                    if (gameImage) gameImage.style.display = 'none';
-                    if (gameTitle) gameTitle.style.display = 'none';
-                    if (gameNotice.length > 0) {
-                        gameNotice.forEach(notice => notice.style.display = 'none');
-                    }
-                    if (btnContainer) btnContainer.style.display = 'none';
-                    
-                    // 移除所有卡片和容器内容
-                    const cardContent = document.querySelector('.card-content');
-                    if (cardContent) {
-                        cardContent.style.display = 'none';
-                    }
-                    
-                    // 强制移除所有背景
-                    removeAllBackgrounds();
-                    
-                    // 直接将iframe添加到页面
-                    const iframe = document.createElement('iframe');
-                    iframe.src = 'https://play.famobi.com/wrapper/bubble-tower-3d/A1000-10';
-                    iframe.style.border = 'none';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100vh';
-                    iframe.style.position = 'fixed';
-                    iframe.style.top = '0';
-                    iframe.style.left = '0';
-                    iframe.style.zIndex = '999';
-                    iframe.style.backgroundColor = 'transparent';
-                    iframe.allow = 'autoplay; fullscreen';
-                    iframe.allowFullscreen = true;
-                    
-                    // 清空内容并添加iframe
-                    gameContent.innerHTML = '';
-                    document.body.appendChild(iframe);
-                    
-                    // 隐藏其他所有内容
-                    document.querySelectorAll('header, footer, section:not(:first-child)').forEach(el => {
-                        el.style.display = 'none';
-                    });  
-                }
-            }
-            
-            // 在页面加载后直接显示游戏
-            loadGame();
-            
-            function showScreenshot(index) {
-                screenshots.forEach(screenshot => screenshot.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
+            // 给GA代码一些时间先执行
+            setTimeout(function() {
+                const screenshots = document.querySelectorAll('.screenshot');
+                const dots = document.querySelectorAll('.dot');
+                const prevBtn = document.querySelector('.screenshot-prev');
+                const nextBtn = document.querySelector('.screenshot-next');
+                let currentIndex = 0;
                 
-                screenshots[index].classList.add('active');
-                dots[index].classList.add('active');
-                currentIndex = index;
-            }
-            
-            function nextScreenshot() {
-                let nextIndex = currentIndex + 1;
-                if (nextIndex >= screenshots.length) {
-                    nextIndex = 0;
+                // 处理游戏链接点击事件
+                const playButton = document.querySelector('.play-button');
+                const gameContainer = document.querySelector('.game-container');
+                const gameContent = document.querySelector('.game-content');
+                
+                // 强制移除所有可能导致灰色背景的元素
+                function removeAllBackgrounds() {
+                    document.querySelectorAll('.card, .game-container, .game-content, section, .container').forEach(el => {
+                        el.style.backgroundColor = 'transparent';
+                        el.style.backdropFilter = 'none';
+                        el.style.webkitBackdropFilter = 'none';
+                        el.style.boxShadow = 'none';
+                        el.style.border = 'none';
+                        el.style.borderRadius = '0';
+                        el.style.margin = '0';
+                        el.style.padding = '0';
+                        el.style.overflow = 'visible';
+                    });
                 }
-                showScreenshot(nextIndex);
-            }
-            
-            function prevScreenshot() {
-                let prevIndex = currentIndex - 1;
-                if (prevIndex < 0) {
-                    prevIndex = screenshots.length - 1;
+                
+                // 给GA代码足够的时间先执行后再加载游戏
+                function loadGame() {
+                    // 创建iframe并添加到游戏容器
+                    if (!document.querySelector('.game-iframe')) {
+                        // 隐藏原有内容
+                        const gameImage = document.querySelector('.game-image');
+                        const gameTitle = document.querySelector('.game-content h2');
+                        const gameNotice = document.querySelectorAll('.game-notice');
+                        const btnContainer = document.querySelector('.btn-container');
+                        
+                        if (gameImage) gameImage.style.display = 'none';
+                        if (gameTitle) gameTitle.style.display = 'none';
+                        if (gameNotice.length > 0) {
+                            gameNotice.forEach(notice => notice.style.display = 'none');
+                        }
+                        if (btnContainer) btnContainer.style.display = 'none';
+                        
+                        // 移除所有卡片和容器内容
+                        const cardContent = document.querySelector('.card-content');
+                        if (cardContent) {
+                            cardContent.style.display = 'none';
+                        }
+                        
+                        // 强制移除所有背景
+                        removeAllBackgrounds();
+                        
+                        // 直接将iframe添加到页面
+                        const iframe = document.createElement('iframe');
+                        iframe.src = 'https://play.famobi.com/wrapper/bubble-tower-3d/A1000-10';
+                        iframe.className = 'game-iframe';
+                        iframe.style.border = 'none';
+                        iframe.style.width = '100%';
+                        iframe.style.height = '100vh';
+                        iframe.style.position = 'fixed';
+                        iframe.style.top = '0';
+                        iframe.style.left = '0';
+                        iframe.style.zIndex = '999';
+                        iframe.style.backgroundColor = 'transparent';
+                        iframe.allow = 'autoplay; fullscreen';
+                        iframe.allowFullscreen = true;
+                        
+                        // 清空内容并添加iframe
+                        gameContent.innerHTML = '';
+                        document.body.appendChild(iframe);
+                        
+                        // 隐藏其他所有内容
+                        document.querySelectorAll('header, footer, section:not(:first-child)').forEach(el => {
+                            el.style.display = 'none';
+                        });
+                    }
                 }
-                showScreenshot(prevIndex);
-            }
-            
-            // 点击事件绑定
-            nextBtn.addEventListener('click', nextScreenshot);
-            prevBtn.addEventListener('click', prevScreenshot);
-            
-            dots.forEach(dot => {
-                dot.addEventListener('click', function() {
-                    const index = parseInt(this.getAttribute('data-index'));
-                    showScreenshot(index);
+                
+                // 在页面加载后延迟一段时间再显示游戏，确保GA有足够时间初始化
+                setTimeout(loadGame, 1000);
+                
+                function showScreenshot(index) {
+                    screenshots.forEach(screenshot => screenshot.classList.remove('active'));
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    
+                    screenshots[index].classList.add('active');
+                    dots[index].classList.add('active');
+                    currentIndex = index;
+                }
+                
+                function nextScreenshot() {
+                    let nextIndex = currentIndex + 1;
+                    if (nextIndex >= screenshots.length) {
+                        nextIndex = 0;
+                    }
+                    showScreenshot(nextIndex);
+                }
+                
+                function prevScreenshot() {
+                    let prevIndex = currentIndex - 1;
+                    if (prevIndex < 0) {
+                        prevIndex = screenshots.length - 1;
+                    }
+                    showScreenshot(prevIndex);
+                }
+                
+                // 点击事件绑定
+                nextBtn.addEventListener('click', nextScreenshot);
+                prevBtn.addEventListener('click', prevScreenshot);
+                
+                dots.forEach(dot => {
+                    dot.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        showScreenshot(index);
+                    });
                 });
-            });
-            
-            // 自动轮播
-            setInterval(nextScreenshot, 5000);
+                
+                // 自动轮播
+                setInterval(nextScreenshot, 5000);
+            }, 500);  // 给GA代码500ms的时间先执行
+        });
+    </script>
+    
+    <!-- 确保GA代码加载 -->
+    <script>
+        // 在页面完全加载后，检查GA是否正确加载
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // 检查GA是否已加载
+                if (window.ga || window.gtag) {
+                    console.log('Google Analytics 已成功加载！');
+                } else {
+                    console.warn('Google Analytics 可能未正确加载，尝试重新加载...');
+                    // 尝试重新加载GA
+                    var gaScript = document.createElement('script');
+                    gaScript.async = true;
+                    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-PMKNPV476D';
+                    document.head.appendChild(gaScript);
+                    
+                    gaScript.onload = function() {
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-PMKNPV476D');
+                        console.log('Google Analytics 已重新加载！');
+                    };
+                }
+            }, 2000); // 页面加载2秒后检查
         });
     </script>
 </body>
